@@ -1,2 +1,2 @@
-# startcore
-学习小工具
+# iplaypiStudy
+学习综合项目，存放示例代码、脚本。
