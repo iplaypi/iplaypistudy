@@ -87,14 +87,16 @@ public class TestHBase {
                 List<Cell> cellList = result.getColumnCells("cf01".getBytes(), "col01".getBytes());
                 // 1个cell就是1个版本
                 for (Cell cell : cellList) {
+                    // 高版本不建议使用
+                    log.info("====getValue -> valStr:[{}]", Bytes.toString(cell.getValue()));
                     // getValueArray:数据的byte数组
                     // getValueOffset:rowkey在数组中的索引下标
                     // getValueLength:rowkey的长度
                     String valStr = Bytes.toString(cell.getValueArray(), cell.getValueOffset(), cell.getValueLength());
-                    log.info("====getColumnCells -> [getValueArray,getValueOffset,getValueLength] -> valStr:[{}]", valStr);
+                    log.info("====[getValueArray,getValueOffset,getValueLength] -> valStr:[{}]", valStr);
                     log.info("====cell timestamp:[{}]", cell.getTimestamp());
                 }
-                // col02列不演示了,省略
+                // col02列不演示了,省略...
             }
         } catch (IOException e) {
             log.error("!!!!error: " + e.getMessage(), e);
