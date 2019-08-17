@@ -13,6 +13,8 @@
     <packaging>pom</packaging>
     <!-- 管理多个子模块 -->
     <modules>
+        <module>iplaypistudy-common-config</module>
+        <module>iplaypistudy-common-core</module>
         <module>iplaypistudy-normal</module>
         <module>iplaypistudy-hadoop</module>
         <module>iplaypistudy-spark</module>
@@ -23,7 +25,51 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
+        <hadoop-common.version>2.7.1.2.4.2.0-258</hadoop-common.version>
+        <hadoop-core.version>1.2.1</hadoop-core.version>
+        <hadoop-annotations.version>2.7.1</hadoop-annotations.version>
+        <hadoop-hdfs.version>2.7.1</hadoop-hdfs.version>
+        <hadoop-auth.version>2.7.1</hadoop-auth.version>
+        <guava.version>16.0.1</guava.version>
+        <slf4j-api.version>1.7.25</slf4j-api.version>
+        <slf4j-log4j12.version>1.7.25</slf4j-log4j12.version>
+        <maven-compiler-plugin.version>3.8.0</maven-compiler-plugin.version>
+        <hbase-client.version>1.1.2</hbase-client.version>
+        <commons-logging.version>1.2</commons-logging.version>
+        <commons-collections.version>3.2.2</commons-collections.version>
+        <commons-configuration.version>1.10</commons-configuration.version>
     </properties>
+
+    <!-- 阿里云maven仓库 -->
+    <repositories>
+        <repository>
+            <id>alimaven</id>
+            <name>aliyun maven</name>
+            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
+    <!-- 激活信息 -->
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <properties>
+                <profileActive>dev</profileActive>
+            </properties>
+        </profile>
+        <profile>
+            <id>line</id>
+            <properties>
+                <profileActive>line</profileActive>
+            </properties>
+        </profile>
+    </profiles>
 
     <dependencies>
         <!-- 注解包,管理POJO -->
@@ -38,6 +84,17 @@
             <artifactId>junit</artifactId>
             <version>4.11</version>
             <scope>test</scope>
+        </dependency>
+        <!-- 日志 -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j-api.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>${slf4j-log4j12.version}</version>
         </dependency>
     </dependencies>
 
