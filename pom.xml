@@ -19,13 +19,15 @@
         <module>iplaypistudy-hadoop</module>
         <module>iplaypistudy-spark</module>
         <module>iplaypistudy-hbase</module>
+        <module>iplaypistudy-elasticsearch</module>
     </modules>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <hadoop-common.version>2.7.1.2.4.2.0-258</hadoop-common.version>
+        <!--<hadoop-common.version>2.7.1.2.4.2.0-258</hadoop-common.version>-->
+        <hadoop-common.version>2.7.1</hadoop-common.version>
         <hadoop-core.version>1.2.1</hadoop-core.version>
         <hadoop-annotations.version>2.7.1</hadoop-annotations.version>
         <hadoop-hdfs.version>2.7.1</hadoop-hdfs.version>
