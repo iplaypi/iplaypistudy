@@ -1,0 +1,17 @@
+A doubt with GitHub Pages
+
+Hello,
+I created my own homepage with GitHub Pages,it is https://github.com/iplaypi/iplaypi.github.io.If you input https://iplaypi.github.io,it jumps to https://www.playpi.org automatically because of CNAME file.The website is https://www.playpi.org,and my site only contains static pages and pictures.
+
+But I have a problem,the following is my detailed description:
+I use Google Search Console to crawl my pages and include them.I only need to provide a site file named website.xml,and it works fine.
+
+But when i use Baidu Webmaster Tools(a tool made by a Chinese search engine company),it doesn't work properly.I only need to provide a site file named baiduwebsite.xml,Baidu Spider will crawl the link in this file .But Baidu cannot include my pages finally,and the reason is Baidu Spider can't crawl my html pages.
+
+So,I am trying to find the real reason,then I succeeded.The real reason is Github Pages forbids the crawling of Baidu Spider.So when Baidu Spider crawls my pages,it will definitely fail.
+
+Here I want to know is this phenomenon real?If yes,why Github Pages forbids Baidu Spider?And what should i do?
+
+Thanks.
+Best regards.
+Perry
