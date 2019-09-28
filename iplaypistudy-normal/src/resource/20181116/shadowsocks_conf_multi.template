@@ -1,0 +1,13 @@
+{
+    "server": "x.x.x.x",
+    "local_address": "127.0.0.1",
+    "local_port":1080,
+    "port_password": {
+        "1227": "pengfeivpn1227",
+        "1226": "pengfeivpn1226",
+        "1225": "pengfeivpn"
+    },
+    "timeout":300,
+    "method":"aes-256-cfb",
+    "fast_open": false
+}
