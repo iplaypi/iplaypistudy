@@ -1,5 +1,6 @@
 #!/bin/bash
-# 日志路径，如果安装失败需要查看日志是否有异常报错信息
+# 注意本脚本中的换行符号,一律使用\n的形式,否则会引起错误
+# 日志路径,如果安装失败需要查看日志,是否有异常/报错信息
 export log_path=/etc/auto_deploy_shadowsocks.log
 # 设置端口号,从键盘接收参数输入,默认为2018,-e参数转义开启高亮显示
 echo -n -e '\033[36mPlease enter PORT[2018 default]:\033[0m'
@@ -34,7 +35,7 @@ cat>/etc/shadowsocks.json<<EOF
 }
 EOF
 echo "****************start install shadowsocks and other tools"
-# 安装shadowsocks/防火墙,携带-y参数表示自动同意安装,无需交互
+# 安装shadowsocks/防火墙,携带-y参数表示自动同意安装,无需交互询问
 # 日志全部输出到上面指定的日志文件中
 echo "" >> ${log_path}
 echo "********************************" >> ${log_path}
@@ -67,11 +68,11 @@ ps -ef | grep ssserver | grep shadowsocks | grep -v grep
 if [ $? -eq 0 ];then
     ps -ef | grep ssserver | grep shadowsocks | awk '{ print $2 }' | xargs kill -9
 fi
-# 后台运行
+# 后台启动,-d表示守护进程
 /usr/bin/ssserver -c /etc/shadowsocks.json -d start
-# 成功
+# 启动成功
 if [ $? -eq 0 ];then
-#获取本机ip地址
+# 获取本机ip地址
 ip=`ip addr | grep 'state UP' -A2 | tail -n1 | awk '{print $2}' | cut -f1 -d '/'`
 clear
 cat<<EOF
@@ -85,14 +86,27 @@ METHOD:aes-256-cfb
 
 *****************JUST ENJOY IT!****************
 EOF
-#建议开启server酱自动通知,推送到微信,就可以复制信息转发给别人了
-#关于server酱的使用请参考:https://sc.ftqq.com
+# 建议开启server酱自动通知,推送到微信,就可以直接复制信息转发给别人了
+# 不开启请把以下内容注释掉,注释内容持续到'server酱通知完成'
+# 关于server酱的使用请参考:https://sc.ftqq.com
+# 注意server_key不要泄露,泄漏后可以去官网重置
+echo "**************开始处理server酱通知"
 server_key=SCU60861T303e1c479df6cea9e95fc54d210232565d7dbbf075750
-text='shadowsocks服务启动完成'
-desp='- ip：$ip\r\n- 端口号：$port\r\n- 密码：$password\r\n- 加密方式：aes-256-cfb'
-curl -X POST -d 'text="${text}"&desp="${desp}"' https://sc.ftqq.com/$server_key.send
+# 传输2个参数:text/desp,desp使用markdown语法(注意换行符要使用2个换行)
+cat>./shadowsocks_msg.txt<<EOF
+text=shadowsocks服务部署启动完成
+&desp=
+- IP地址：$ip
+
+- 端口号：$port
+
+- 密码：$pwd
+
+- 加密方式：aes-256-cfb
+EOF
+curl -X POST --data-binary @./shadowsocks_msg.txt  https://sc.ftqq.com/$server_key.send
 echo ""
-echo "server酱通知完成"
+echo "**************server酱通知处理完成"
 # 失败
 else
 clear
