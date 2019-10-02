@@ -1,7 +1,7 @@
 #!/bin/bash
 # 注意本脚本中的换行符号,一律使用\n的形式,否则会引起错误
 # 日志路径,如果安装失败需要查看日志,是否有异常/报错信息
-export log_path=/etc/auto_deploy_shadowsocks.log
+export log_path=/etc/auto_restart_shadowsocks.log
 # 设置端口号,从键盘接收参数输入,默认为2018,-e参数转义开启高亮显示
 echo -n -e '\033[36mPlease enter PORT[2018 default]:\033[0m'
 read port
@@ -34,34 +34,13 @@ cat>/etc/shadowsocks.json<<EOF
     "fast_open": false
 }
 EOF
-echo "****************start install shadowsocks and other tools"
-# 安装shadowsocks/防火墙,携带-y参数表示自动同意安装,无需交互询问
-# 日志全部输出到上面指定的日志文件中
-echo "" >> ${log_path}
-echo "********************************" >> ${log_path}
-echo "start deploy shadowsocks,date is:"$(date +%Y-%m-%d-%X) >> ${log_path}
-echo "********************************" >> ${log_path}
-echo "" >> ${log_path}
-echo "******************start install m2crypto" >> ${log_path}
-ret=`yum install -y m2crypto python-setuptools >> ${log_path} 2>&1`
-echo "" >> ${log_path}
-echo "******************start install pip" >> ${log_path}
-ret=`easy_install pip >> ${log_path} 2>&1`
-echo "" >> ${log_path}
-echo "******************start install shadowsocks" >> ${log_path}
-ret=`pip install shadowsocks >> ${log_path} 2>&1`
-echo "" >> ${log_path}
-echo "******************start install firewalld" >> ${log_path}
-ret=`yum install -y firewalld >> ${log_path} 2>&1`
-echo "" >> ${log_path}
-echo "******************start start firewalld" >> ${log_path}
-ret=`systemctl start firewalld >> ${log_path} 2>&1`
-echo "" >> ${log_path}
-echo "******************start reload firewall" >> ${log_path}
+echo "****************start open port"
 # 开启端口
-ret=`firewall-cmd --permanent --zone=public --add-port=22/tcp >> ${log_path} 2>&1`
 ret=`firewall-cmd --permanent --zone=public --add-port=$port/tcp >> ${log_path} 2>&1`
 ret=`firewall-cmd --reload >> ${log_path} 2>&1`
+# 正常停掉 shadowsocks 服务
+echo "****************start stop shadowsocks"
+/usr/bin/ssserver -c /etc/shadowsocks.json -d stop
 echo "****************start check shadowsocks"
 # 如果有相同功能的进程则先杀死,$?表示上个命令的退出状态,或者函数的返回值
 ps -ef | grep ssserver | grep shadowsocks | grep -v grep
