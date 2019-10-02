@@ -22,7 +22,7 @@ notice_msg=""
 # 变量,标记ip/端口的失败次数
 ip_fail_num=0
 port_fail_num=0
-# while循环,每10分钟执行一次
+# while循环
 while :
 do
 # 查看ip是否正常
