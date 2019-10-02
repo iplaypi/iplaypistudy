@@ -1,0 +1,46 @@
+### CentOS 7 安装 shadowsocks 指南 ###
+
+
+# 基础组件
+yum install m2crypto python-setuptools -y
+easy_install pip
+pip install shadowsocks
+
+
+# 配置信息
+vi  /etc/shadowsocks.json
+
+
+# 防火墙及端口
+# 安装防火墙
+yum install firewalld
+# 启动防火墙
+systemctl start firewalld
+# 查看目前已经开启的端口号
+firewall-cmd --list-ports
+# 端口号是你自己设置的端口 
+firewall-cmd --permanent --zone=public --add-port=1225/tcp
+firewall-cmd --permanent --zone=public --add-port=1226/tcp
+firewall-cmd --permanent --zone=public --add-port=1227/tcp
+# 重载更新的端口信息 
+firewall-cmd --reload
+#移除端口
+firewall-cmd --permanent --zone=public --remove-port=1227/tcp
+
+
+# 开启/关闭ss
+# 后台运行    
+ssserver -c /etc/shadowsocks.json -d start
+# 调试时使用下面命令，实时查看日志
+ssserver -c /etc/shadowsocks.json
+# 停止运行    
+ssserver -c /etc/shadowsocks.json -d stop
+# 日志默认在,里面包含域名/ip信息
+/var/log/shadowsocks.log
+
+
+# 安装 lsof 工具
+yum install lsof
+# 查看进程占用的文件,先使用 ps 获取进程号
+ps -ef |grep 'shadowsocks'
+lsof -p pid
