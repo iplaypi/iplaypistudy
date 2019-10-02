@@ -30,26 +30,26 @@ notice_msg=""
 ip_fail_num=0
 port_fail_num=0
 # while循环,每10分钟执行一次
-while:
+while :
 do
 # 查看ip是否正常
 ping=`ping -c 1 $ip |grep loss |awk '{print $6}' |awk -F "%" '{print $1}'`
 if [ $ping -eq 100 ];then
 ip_fail_num=`expr $ip_fail_num + 1`
-echo ping $(date +%Y%m%d%t%X) $ip fail >> $log_path
+echo ping [$ip] at $(date +%Y-%m-%d%t%X) fail >> $log_path
 notice=1
-notice_msg=`echo ping $(date +%Y%m%d%t%X) $ip 失败，累计次数：$ip_fail_num，请更换主机`
+notice_msg=`echo ping [$ip] at $(date +%Y-%m-%d%t%X) 失败，累计次数：[$ip_fail_num]，请更换主机`
 else
-echo ping $(date +%Y%m%d%t%X) $ip ok >> $log_path
+echo ping [$ip] at $(date +%Y-%m-%d%t%X) ok >> $log_path
 ip_fail_num=0
 # 接着判断端口是否可用,使用nc工具,超时时间为20秒
 `nc -v -z -w 20 $ip $port`
 if [ 0 -ne $? ];then
 port_fail_num=`expr $port_fail_num + 1`
-echo nc $(date +%Y%m%d%t%X) $ip:$port fail >> $log_path
+echo nc [$ip:$port] at $(date +%Y-%m-%d%t%X) fail >> $log_path
 if [ $port_fail_num -gt 3 ];then
 notice=1
-notice_msg=`echo nc $(date +%Y%m%d%t%X) $ip:$port 失败，累计次数：$port_fail_num，请更换端口`
+notice_msg=`echo nc [$ip:$port] at $(date +%Y-%m-%d%t%X) 失败，累计次数：[$port_fail_num]，请更换端口`
 fi
 else
 port_fail_num=0
