@@ -73,7 +73,7 @@ echo "**************开始处理server酱通知"
 server_key=SCU60861T303e1c479df6cea9e95fc54d210232565d7dbbf075750
 # 传输2个参数:text/desp,desp使用markdown语法(注意换行符要使用2个换行)
 cat>./shadowsocks_msg.txt<<EOF
-text=shadowsocks服务重新启动完成-更换端口
+text=shadowsocks服务更换端口重新启动完成
 &desp=
 - IP地址：$ip
 
