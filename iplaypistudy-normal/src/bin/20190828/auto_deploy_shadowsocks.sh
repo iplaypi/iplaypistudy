@@ -15,7 +15,7 @@ fi
 echo -n -e '\033[36mPlease enter PASSWORD[pengfeivpn default]:\033[0m'
 read pwd
 if [ ! -n "$pwd" ];then
-    echo "password will be set to 123456"
+    echo "password will be set to pengfeivpn"
     pwd=pengfeivpn
 else
     echo "password will be set to $pwd"
