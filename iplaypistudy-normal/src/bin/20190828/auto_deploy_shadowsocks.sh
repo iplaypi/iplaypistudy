@@ -39,7 +39,7 @@ echo "****************start install shadowsocks and other tools"
 # 日志全部输出到上面指定的日志文件中
 echo "" >> ${log_path}
 echo "********************************" >> ${log_path}
-echo "start deploy shadowsocks,date is:"$(date +%Y-%m-%d-%X) >> ${log_path}
+echo "start deploy shadowsocks,date is:"$(date +%Y-%m-%d%t%X) >> ${log_path}
 echo "********************************" >> ${log_path}
 echo "" >> ${log_path}
 echo "******************start install m2crypto" >> ${log_path}
