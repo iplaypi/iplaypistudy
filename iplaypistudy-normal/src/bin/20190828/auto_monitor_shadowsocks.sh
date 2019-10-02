@@ -11,9 +11,9 @@ ip=$1
 port=$2
 log_path=/etc/auto_monitor_shadowsocks.log
 # 设置执行周期,默认10分钟,如果参数有指定则使用
-circle_time=10m
-if [ -n $3 ];then
-  circle_time=$3
+circle_time=$3
+if [ -z $circle_time ];then
+  circle_time=10m
 fi
 echo "ip will be set to [$ip],port will be set to [$port],circle_time will be set to [$circle_time]"
 # 变量,标记是否通知以及通知内容
