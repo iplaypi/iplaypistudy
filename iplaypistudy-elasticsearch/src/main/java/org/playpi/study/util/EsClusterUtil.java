@@ -3,7 +3,14 @@ package org.playpi.study.util;
 import com.google.common.collect.Maps;
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
+import org.elasticsearch.client.transport.TransportClient;
+import org.elasticsearch.common.settings.Settings;
+import org.elasticsearch.common.transport.InetSocketTransportAddress;
+import org.elasticsearch.common.transport.TransportAddress;
+import org.elasticsearch.transport.client.PreBuiltTransportClient;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.Map;
 
 /**
@@ -14,6 +21,40 @@ import java.util.Map;
  */
 @Slf4j
 public class EsClusterUtil {
+
+    /**
+     * 根据主机端口列表/集群名称,创建es连接
+     * 由于开启连接需要占用资源,不要开启过多,并在使用完毕后及时关闭
+     *
+     * @param hostArr
+     * @param clusterName
+     * @return
+     */
+    public static TransportClient initTransportClient(String[] hostArr, String clusterName) {
+        TransportClient client = null;
+        Settings settings = Settings.builder()
+                .put("cluster.name", clusterName)
+                .put("client.transport.ping_timeout", "60s")
+                .put("client.transport.sniff", true)//开启嗅探特性
+                .build();
+        /**
+         * String[] hostArr = new String[]{"hostname1:port", "hostname2:port", "hostname3:port"};
+         */
+        TransportAddress[] transportAddresses = new InetSocketTransportAddress[hostArr.length];
+        for (int i = 0; i < hostArr.length; i++) {
+            String[] parts = hostArr[i].split(":");
+            try {
+                InetAddress inetAddress = InetAddress.getByName(parts[0]);
+                transportAddresses[i] = new InetSocketTransportAddress(inetAddress, Integer.parseInt(parts[1]));
+            } catch (UnknownHostException e) {
+                log.error("!!!!es连接初始化出错: " + e.getMessage(), e);
+                return client;
+            }
+        }
+        client = new PreBuiltTransportClient(settings)
+                .addTransportAddresses(transportAddresses);
+        return client;
+    }
 
     /**
      * 指定主机的所有索引信息<索引真名,别名>
