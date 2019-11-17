@@ -20,6 +20,16 @@
 ## 3、根据功能需要编译执行
 例如，只需要打包某一个模块：`mvn clean package -P dev -pl iplaypistudy-hbase -am`
 
+## 4、创建模块
+在新建 `maven` 的模块时，如果遇到网络不好的情况下，使用 `maven-archetype-quickstart` 骨架可能一直卡住，所以需要设置 `archetypeCatalog`参数：
+
+```
+archetypeCatalog=internal
+iplaypistudy
+org.playpi.study
+```
+
+
 # 自动化脚本
 为了编译打包后方便执行某些功能代码，把环境设置过程、执行的命令整理为脚本：`run.sh`
 
