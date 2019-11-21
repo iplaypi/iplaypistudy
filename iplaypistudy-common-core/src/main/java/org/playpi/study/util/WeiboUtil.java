@@ -29,7 +29,9 @@ public class WeiboUtil {
             "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N",
             "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
 
-    // 合法微博url正则
+    /**
+     * 合法微博url正则
+     */
     private static final String REGEX_WEIBO_URL = "https?://(www\\.)?weibo\\.com/[0-9]+/[0-9a-zA-Z]+";
     private static final Pattern PATTERN_WEIBO_URL = Pattern.compile(REGEX_WEIBO_URL);
     private static final Pattern PATTERN_WEIBO_DIGITAL = Pattern.compile("/([0-9]+)/");
