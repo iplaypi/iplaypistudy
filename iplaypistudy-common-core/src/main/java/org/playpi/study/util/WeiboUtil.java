@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 
 /**
  * 微博工具类
- * http://weibo.com/2434411070/E9se2kp4e
+ * 微博url示例:http://weibo.com/2434411070/E9se2kp4e
  * <p>
  * 处理微博url/mid/uid/url相关
  * 微博url是指http开头的微博连接,例如:http://weibo.com/2434411070/E9se2kp4e
