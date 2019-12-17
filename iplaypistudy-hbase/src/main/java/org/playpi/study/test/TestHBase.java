@@ -51,7 +51,7 @@ public class TestHBase {
             /**
              * 以下有两种解析结果的方法
              * 1-通过Result类的getRow()和getValue()两个方法,只能获取最新版本
-             * 2-通过Result类的rawCells()方法返回一个Cell数组,可以获取多个版本
+             * 2-通过Result类的rawCells()方法返回一个Cell数组,可以获取多个版本,如果使用getColumnCells可以指定列
              * 注意,高版本不再建议使用KeyValue的方式,注释中有说明
              */
             // 1-
