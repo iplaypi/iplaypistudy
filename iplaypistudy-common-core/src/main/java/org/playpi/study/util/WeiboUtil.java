@@ -9,13 +9,13 @@ import java.util.regex.Pattern;
 
 /**
  * 微博工具类
- * 微博url示例:http://weibo.com/2434411070/E9se2kp4e
+ * url示例:https://weibo.com/3086148515/I1IGF4Ud1
  * <p>
- * 处理微博url/mid/uid/url相关
- * 微博url是指http开头的微博连接,例如:http://weibo.com/2434411070/E9se2kp4e
- * mid是指微博唯一标识,例如:4022534544862922
- * uid是指微博用户唯一标识,例如:2434411070
- * url是指微博url中结尾的一串字符,例如:E9se2kp4e
+ * 处理url/mid/uid/id相关
+ * url是指以http/https开头的微博链接,例如:https://weibo.com/3086148515/I1IGF4Ud1
+ * mid是指微博唯一标识,可以和id转换,例如:4404101091169383
+ * uid是指微博用户唯一标识,例如:3086148515
+ * id是指微博url中结尾的一串字符,可以和mid转换,例如:I1IGF4Ud1
  */
 @Slf4j
 public class WeiboUtil {
@@ -30,41 +30,43 @@ public class WeiboUtil {
             "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
 
     /**
-     * 合法微博url正则
+     * 合法url正则
      */
     private static final String REGEX_WEIBO_URL = "https?://(www\\.)?weibo\\.com/[0-9]+/[0-9a-zA-Z]+";
     private static final Pattern PATTERN_WEIBO_URL = Pattern.compile(REGEX_WEIBO_URL);
+    /**
+     * 数字正则
+     */
     private static final Pattern PATTERN_WEIBO_DIGITAL = Pattern.compile("/([0-9]+)/");
-    ;
 
     /**
-     * 根据uid/mid拼接微博链接
+     * 根据uid/mid拼接url
      *
      * @param uid
      * @param mid
      * @return
      */
-    public static String getWeiboUrlByUidMid(String uid, String mid) {
-        return String.format("http://weibo.com/%s/%s", uid, mid2url(mid));
+    public static String getUrlByUidMid(String uid, String mid) {
+        return String.format("https://weibo.com/%s/%s", uid, mid2id(mid));
     }
 
     /**
-     * 从微博url中抽取uid
+     * 从url中抽取uid
      *
-     * @param weiboUrl
+     * @param url
      * @return
      */
-    public static String getUidByWeiboUrl(String weiboUrl) {
+    public static String getUidByUrl(String url) {
         String uid = "";
-        if (!StringUtils.isEmpty(weiboUrl)) {
-            Matcher matcher = PATTERN_WEIBO_URL.matcher(weiboUrl);
+        if (!StringUtils.isEmpty(url)) {
+            Matcher matcher = PATTERN_WEIBO_URL.matcher(url);
             if (matcher.find()) {
-                weiboUrl = weiboUrl.substring(matcher.start(), matcher.end());
+                url = url.substring(matcher.start(), matcher.end());
                 // 抽取其中的数字串
-                Matcher digitalMatcher = PATTERN_WEIBO_DIGITAL.matcher(weiboUrl);
+                Matcher digitalMatcher = PATTERN_WEIBO_DIGITAL.matcher(url);
                 if (digitalMatcher.find()) {
 //                    uid = digitalMatcher.group();
-                    uid = weiboUrl.substring(digitalMatcher.start() + 1, digitalMatcher.end() - 1);
+                    uid = url.substring(digitalMatcher.start() + 1, digitalMatcher.end() - 1);
                 }
             }
         }
@@ -72,21 +74,22 @@ public class WeiboUtil {
     }
 
     /**
-     * 从微博url中抽取mid
+     * 从url中抽取mid
+     * 先抽取id再转换
      *
-     * @param weiboUrl
+     * @param url
      * @return
      */
-    public static String getMidByWeiboUrl(String weiboUrl) {
+    public static String getMidByUrl(String url) {
         String mid = "";
-        if (!StringUtils.isEmpty(weiboUrl)) {
-            Matcher matcher = PATTERN_WEIBO_URL.matcher(weiboUrl);
+        if (!StringUtils.isEmpty(url)) {
+            Matcher matcher = PATTERN_WEIBO_URL.matcher(url);
             if (matcher.find()) {
-                // 先抽取微博url,再转换mid
-                weiboUrl = weiboUrl.substring(matcher.start(), matcher.end());
-                int index = weiboUrl.lastIndexOf("/");
-                String url = weiboUrl.substring(index + 1);
-                mid = url2mid(url);
+                // 先抽取url规范部分(例如去除?后面的参数),再抽取id,再转换为mid
+                url = url.substring(matcher.start(), matcher.end());
+                int index = url.lastIndexOf("/");
+                String id = url.substring(index + 1);
+                mid = id2mid(id);
             }
         }
         return mid;
@@ -193,7 +196,7 @@ public class WeiboUtil {
      * @param url
      * @return
      */
-    public static String url2mid(String url) {
+    public static String id2mid(String url) {
         String mid = "";
         String k = url.toString().substring(3, 4);//用于第四位为0时的转换
         if (!k.equals("0")) {
@@ -246,7 +249,7 @@ public class WeiboUtil {
      * @param mid
      * @return
      */
-    public static String mid2url(String mid) {
+    public static String mid2id(String mid) {
         String url = "";
         for (int j = mid.length() - 7; j > -7; j = j - 7) {//以7个数字为一个单位进行转换
             int offset3 = j < 0 ? 0 : j;
@@ -318,11 +321,11 @@ public class WeiboUtil {
      */
     @Test
     public void test() {
-        log.info("====getWeiboUrl:[{}]", getWeiboUrlByUidMid("2434411070", "4022534544862922"));
-        log.info("====getUidByWeiboUrl:[{}]", getUidByWeiboUrl("http://weibo.com/2434411070/E9se2kp4e"));
-        log.info("====getMidByWeiboUrl:[{}]", getMidByWeiboUrl("http://weibo.com/2434411070/E9se2kp4e"));
+        log.info("====getUrl:[{}]", getUrlByUidMid("3086148515", "4404101091169383"));
+        log.info("====getUidByUrl:[{}]", getUidByUrl("https://weibo.com/3086148515/I1IGF4Ud1"));
+        log.info("====getMidByUrl:[{}]", getMidByUrl("https://weibo.com/3086148515/I1IGF4Ud1"));
 
-        log.info("====url2mid:[{}]", url2mid("E9se2kp4e"));
-        log.info("====mid2url:[{}]", mid2url("2011101011002749014"));
+        log.info("====url2mid:[{}]", id2mid("I1IGF4Ud1"));
+        log.info("====mid2url:[{}]", mid2id("4404101091169383"));
     }
 }
