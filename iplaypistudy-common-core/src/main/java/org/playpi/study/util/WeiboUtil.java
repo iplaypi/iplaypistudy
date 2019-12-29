@@ -187,23 +187,19 @@ public class WeiboUtil {
     }
 
     /**
-     * url转化成mid的值
-     * 注意这里的url不是指完整的url,而是唯一标识
-     * 例如微博链接:https://weibo.com/6004173277/GEFG5nZX0,
-     * url指的是:GEFG5nZX0,
-     * 转为mid是:4296933335719686
+     * id转化成mid的值
      *
-     * @param url
+     * @param id
      * @return
      */
-    public static String id2mid(String url) {
+    public static String id2mid(String id) {
         String mid = "";
-        String k = url.toString().substring(3, 4);//用于第四位为0时的转换
+        String k = id.toString().substring(3, 4);//用于第四位为0时的转换
         if (!k.equals("0")) {
-            for (int i = url.length() - 4; i > -4; i = i - 4) {//分别以四个为一组
+            for (int i = id.length() - 4; i > -4; i = i - 4) {//分别以四个为一组
                 int offset1 = i < 0 ? 0 : i;
                 int offset2 = i + 4;
-                String str = url.toString().substring(offset1, offset2);
+                String str = id.toString().substring(offset1, offset2);
                 str = str62to10(str);//String类型的转化成十进制的数
                 // 若不是第一组，则不足7位补0
                 if (offset1 > 0) {
@@ -214,11 +210,11 @@ public class WeiboUtil {
                 mid = str + mid;
             }
         } else {
-            for (int i = url.length() - 4; i > -4; i = i - 4) {
+            for (int i = id.length() - 4; i > -4; i = i - 4) {
                 int offset1 = i < 0 ? 0 : i;
                 int offset2 = i + 4;
                 if (offset1 > -1 && offset1 < 1 || offset1 > 4) {
-                    String str = url.toString().substring(offset1, offset2);
+                    String str = id.toString().substring(offset1, offset2);
                     str = str62to10(str);
                     // 若不是第一组，则不足7位补0
                     if (offset1 > 0) {
@@ -228,7 +224,7 @@ public class WeiboUtil {
                     }
                     mid = str + mid;
                 } else {
-                    String str = url.toString().substring(offset1 + 1, offset2);
+                    String str = id.toString().substring(offset1 + 1, offset2);
                     str = str62to10(str);
                     // 若不是第一组，则不足7位补0
                     if (offset1 > 0) {
@@ -244,7 +240,7 @@ public class WeiboUtil {
     }
 
     /**
-     * mid转换成url编码以后的值
+     * mid转换成id
      *
      * @param mid
      * @return
@@ -321,11 +317,15 @@ public class WeiboUtil {
      */
     @Test
     public void test() {
-        log.info("====getUrl:[{}]", getUrlByUidMid("3086148515", "4404101091169383"));
-        log.info("====getUidByUrl:[{}]", getUidByUrl("https://weibo.com/3086148515/I1IGF4Ud1"));
-        log.info("====getMidByUrl:[{}]", getMidByUrl("https://weibo.com/3086148515/I1IGF4Ud1"));
+        String urlStr = "https://weibo.com/3086148515/I1IGF4Ud1";
+        String idStr = "I1IGF4Ud1";
+        String midStr = "4404101091169383";
+        String uidStr = "3086148515";
+        log.info("====getUrlByUidMid,uid:[{}],mid:[{}],url:[{}]", uidStr, midStr, getUrlByUidMid(uidStr, midStr));
+        log.info("====getUidByUrl,url:[{}],uid:[{}]", urlStr, getUidByUrl(urlStr));
+        log.info("====getMidByUrl,url:[{}], mid:[{}]", urlStr, getMidByUrl(urlStr));
 
-        log.info("====url2mid:[{}]", id2mid("I1IGF4Ud1"));
-        log.info("====mid2url:[{}]", mid2id("4404101091169383"));
+        log.info("====id2mid,id:[{}],mid:[{}]", idStr, id2mid(idStr));
+        log.info("====mid2id,mid:[{}],id:[{}]", midStr, mid2id(midStr));
     }
 }
