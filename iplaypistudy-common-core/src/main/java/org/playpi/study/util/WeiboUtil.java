@@ -12,10 +12,15 @@ import java.util.regex.Pattern;
  * url示例:https://weibo.com/3086148515/I1IGF4Ud1
  * <p>
  * 处理url/mid/uid/id相关
+ * <p>
  * url是指以http/https开头的微博链接,例如:https://weibo.com/3086148515/I1IGF4Ud1
- * mid是指微博唯一标识,可以和id转换,例如:4404101091169383
+ * mid是指微博唯一标识,可以和id转换,例如:4404101091169383(也可以理解为mobile id,可以和murl转换)
  * uid是指微博用户唯一标识,例如:3086148515
  * id是指微博url中结尾的一串字符,可以和mid转换,例如:I1IGF4Ud1
+ * <p>
+ * murl,即mobile url,移动端url,格式:https://m.weibo.cn/status/idhuo或者https://m.weibo.cn/status/mid
+ * 专为客户端设计,适合使用手机/平板的浏览器打开,排版显示友好,如果使用电脑的浏览器打开,排版显示不友好
+ * 例如:https://m.weibo.cn/status/I1IGF4Ud1或者https://m.weibo.cn/status/4404101091169383
  */
 @Slf4j
 public class WeiboUtil {
@@ -321,11 +326,15 @@ public class WeiboUtil {
         String idStr = "I1IGF4Ud1";
         String midStr = "4404101091169383";
         String uidStr = "3086148515";
+        String murlStr1 = "https://m.weibo.cn/status/I1IGF4Ud1";
+        String murlStr2 = "https://m.weibo.cn/status/4404101091169383";
         log.info("====getUrlByUidMid,uid:[{}],mid:[{}],url:[{}]", uidStr, midStr, getUrlByUidMid(uidStr, midStr));
         log.info("====getUidByUrl,url:[{}],uid:[{}]", urlStr, getUidByUrl(urlStr));
         log.info("====getMidByUrl,url:[{}], mid:[{}]", urlStr, getMidByUrl(urlStr));
 
         log.info("====id2mid,id:[{}],mid:[{}]", idStr, id2mid(idStr));
         log.info("====mid2id,mid:[{}],id:[{}]", midStr, mid2id(midStr));
+        // getMurlBuMid
+        // getMurlById
     }
 }
