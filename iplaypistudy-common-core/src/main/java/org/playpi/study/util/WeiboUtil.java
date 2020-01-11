@@ -21,6 +21,8 @@ import java.util.regex.Pattern;
  * murl,即mobile url,移动端url,格式:https://m.weibo.cn/status/idhuo或者https://m.weibo.cn/status/mid
  * 专为客户端设计,适合使用手机/平板的浏览器打开,排版显示友好,如果使用电脑的浏览器打开,排版显示不友好
  * 例如:https://m.weibo.cn/status/I1IGF4Ud1或者https://m.weibo.cn/status/4404101091169383
+ * <p>
+ * 博客链接:https://www.playpi.org/2018122001.html
  */
 @Slf4j
 public class WeiboUtil {
@@ -53,6 +55,16 @@ public class WeiboUtil {
      */
     public static String getUrlByUidMid(String uid, String mid) {
         return String.format("https://weibo.com/%s/%s", uid, mid2id(mid));
+    }
+
+    /**
+     * 根据mid或者id获取mrul
+     *
+     * @param midOrid
+     * @return
+     */
+    public static String getMurlByMidOrid(String midOrid) {
+        return String.format("https://m.weibo.cn/status/%s", midOrid);
     }
 
     /**
@@ -98,97 +110,6 @@ public class WeiboUtil {
             }
         }
         return mid;
-    }
-
-    public static String url2midNew(String url) {
-        String mid = "";
-        int index = url.length();
-        while (index > 0) {
-            String substr = "";
-            if (index - 4 < 0) {
-                substr = url.substring(0, index);
-                mid = int62to10New(substr, false) + mid;
-            } else {
-                substr = url.substring(index - 4, index);
-                mid = int62to10New(substr, true) + mid;
-            }
-            index -= 4;
-        }
-        return mid;
-    }
-
-    /**
-     * 62进制值转换为10进制
-     *
-     * @param {String} int62 62进制值
-     * @return {int} 10进制值
-     */
-    public static String int62to10New(String int62, boolean needPending) {
-        int res = 0;
-        int base = 62;
-        for (int i = 0; i < int62.length(); ++i) {
-            res *= base;
-            char charofint62 = int62.charAt(i);
-            if (charofint62 >= '0' && charofint62 <= '9') {
-                int num = charofint62 - '0';
-                res += num;
-            } else if (charofint62 >= 'a' && charofint62 <= 'z') {
-                int num = charofint62 - 'a' + 10;
-                res += num;
-            } else if (charofint62 >= 'A' && charofint62 <= 'Z') {
-                int num = charofint62 - 'A' + 36;
-                res += num;
-            } else {
-                System.err.println("this is not a 62base number");
-                return null;
-            }
-        }
-        String resstr = String.valueOf(res);
-        if (needPending) {
-            while (resstr.length() < 7) {
-                resstr = "0" + resstr;
-            }
-        }
-        return resstr;
-    }
-
-    public static String genHashId(String mid) {
-        String url = "";
-        // if the high position need to be pended by zero.
-        boolean needPending = true;
-        for (int i = mid.length() - 7; i > -7; i = i - 7) {//从最后往前以7字节为一组读取mid
-            int offset1 = i < 0 ? 0 : i;
-            int offset2 = i + 7;
-            String num = mid.substring(offset1, offset2);
-            if (i < 0)
-                needPending = false;
-
-            num = int10to62New(Integer.parseInt(num), needPending);
-            url = num + url;
-        }
-
-        return url;
-    }
-
-    /**
-     * 10进制值转换为62进制，需要对得出的62base number补齐4位
-     *
-     * @param {String} int10 10进制值
-     * @return {String} 62进制值
-     */
-    public static String int10to62New(int int10, boolean needPending) {
-        String s62 = "";
-        int r = 0;
-        while (int10 != 0 && s62.length() < 100) {
-            r = int10 % 62;
-            s62 = str62key[r] + s62;
-            int10 = (int) Math.floor(int10 / 62);
-        }
-        if (needPending)
-            while (s62.length() < 4) {
-                s62 = "0" + s62;
-            }
-        return s62;
     }
 
     /**
@@ -334,7 +255,8 @@ public class WeiboUtil {
 
         log.info("====id2mid,id:[{}],mid:[{}]", idStr, id2mid(idStr));
         log.info("====mid2id,mid:[{}],id:[{}]", midStr, mid2id(midStr));
-        // getMurlBuMid
-        // getMurlById
+
+        log.info("====getMurlByMidOrid,mid:[{}],murl:[{}]", midStr, getMurlByMidOrid(midStr));
+        log.info("====getMurlByMidOrid,id:[{}],murl:[{}]", idStr, getMurlByMidOrid(idStr));
     }
 }
