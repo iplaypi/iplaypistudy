@@ -1,6 +1,7 @@
 package org.playpi.study.util;
 
 import com.google.common.collect.Sets;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Set;
@@ -17,6 +18,7 @@ import java.util.regex.Pattern;
  * @see #isMatchRegexFromText(String, String)
  * 判断文本是否匹配指定的正则表达式
  */
+@Slf4j
 public class CommonUtil {
 
     // 微博话题,昵称,链接,表情正则表达式
@@ -46,7 +48,7 @@ public class CommonUtil {
      */
     public static String formatText(String text, boolean rmTopic, boolean rmNickname,
                                     boolean rmUrl, boolean rmEmoji) {
-        if (StringUtils.isBlank(text)) {
+        if (StringUtils.isEmpty(text)) {
             return "";
         }
         if (rmTopic) {
@@ -79,7 +81,7 @@ public class CommonUtil {
      */
     public static Set<String> matchRegexFromText(String text, String regex, boolean matchAll) {
         Set<String> result = Sets.newHashSet();
-        if (StringUtils.isBlank(text) || StringUtils.isBlank(regex)) {
+        if (StringUtils.isEmpty(text) || StringUtils.isEmpty(regex)) {
             return result;
         }
         Pattern pattern = Pattern.compile(regex);
@@ -102,7 +104,7 @@ public class CommonUtil {
      * @return true/false
      */
     public static boolean isMatchRegexFromText(String text, String regex) {
-        if (StringUtils.isBlank(text) || StringUtils.isBlank(regex)) {
+        if (StringUtils.isEmpty(text) || StringUtils.isEmpty(regex)) {
             return false;
         }
         Pattern pattern = Pattern.compile(regex);

@@ -1,7 +1,7 @@
 package org.playpi.study.util;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 
 import java.util.regex.Matcher;
@@ -23,6 +23,14 @@ import java.util.regex.Pattern;
  * 例如:https://m.weibo.cn/status/I1IGF4Ud1或者https://m.weibo.cn/status/4404101091169383
  * <p>
  * 博客链接:https://www.playpi.org/2018122001.html
+ *
+ * @see #getMidByUrl(String)
+ * @see #getUidByUrl(String)
+ * @see #getUrlByUidMid(String, String)
+ * @see #getMurlByMidOrid(String)
+ * @see #mid2id(String)
+ * @see #id2mid(String)
+ * @see #extractSelfContent(String)
  */
 @Slf4j
 public class WeiboUtil {
@@ -239,6 +247,28 @@ public class WeiboUtil {
     }
 
     /**
+     * 微博原创内容提取:认为 //@ 子串以及之后的内容为上层内容,子串之前的内容为原创
+     * 也称为自发内容
+     * 例如转发微博时微博用户也发了文字/表情/话题等
+     *
+     * @param content
+     * @return
+     */
+    public static String extractSelfContent(String content) {
+        if (StringUtils.isEmpty(content)) {
+            return null;
+        }
+        int pos = content.indexOf("//@");
+        String result = null;
+        if (pos > 0) {
+            result = content.substring(0, pos);
+        } else {
+            result = content;
+        }
+        return result;
+    }
+
+    /**
      * 测试用例
      */
     @Test
@@ -258,5 +288,12 @@ public class WeiboUtil {
 
         log.info("====getMurlByMidOrid,mid:[{}],murl:[{}]", midStr, getMurlByMidOrid(midStr));
         log.info("====getMurlByMidOrid,id:[{}],murl:[{}]", idStr, getMurlByMidOrid(idStr));
+
+        String content1 = "转发微博//@xx: 上一级微博内容";
+        String content2 = "[开心]//@xx: 上一级微博内容";
+        String content3 = "加油#中国好声音#//@xx: 上一级微博内容";
+        log.info("====extractSelfContent,[{}] -> [{}]", content1, extractSelfContent(content1));
+        log.info("====extractSelfContent,[{}] -> [{}]", content2, extractSelfContent(content2));
+        log.info("====extractSelfContent,[{}] -> [{}]", content3, extractSelfContent(content3));
     }
 }
