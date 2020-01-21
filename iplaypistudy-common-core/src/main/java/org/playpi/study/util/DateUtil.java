@@ -6,7 +6,6 @@ import org.junit.Test;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -22,6 +21,7 @@ public class DateUtil {
      * @param format
      * @return
      */
+    @Deprecated
     public static Long parseTimestamp(String formatDate, String format) {
         Long result = null;
         if (StringUtils.isEmpty(formatDate) || StringUtils.isEmpty(format)) {
@@ -43,6 +43,7 @@ public class DateUtil {
      * @param format
      * @return
      */
+    @Deprecated
     public static String formatDate(Long timestamp, String format) {
         String result = null;
         if (Objects.isNull(timestamp) || StringUtils.isEmpty(format)) {
