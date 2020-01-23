@@ -41,4 +41,27 @@ public class LossPrecision {
         log.info("====multiply:[{}]", bigDecimal3.multiply(bigDecimal4).setScale(2, BigDecimal.ROUND_HALF_UP));
     }
 
+    @Test
+    public void otherTest() {
+        // 其它小问题
+        double val1 = 61.5;
+        double val2 = 60.4;
+        double dif = 1.1;
+        // 判断差值结果为0的问题
+        if (Math.abs(val1 - val2 - dif) == 0) {
+            log.info("====差值结果为0");
+            //do things
+        } else {
+            log.info("====差值结果不为0");
+        }
+        // 加上允许精度损失的判断逻辑
+        double exp = 10E-10;
+        if (Math.abs(val1 - val2 - dif) > -1 * exp && Math.abs(val1 - val2 - dif) < exp) {
+            log.info("====差值结果为0");
+            //do things
+        } else {
+            log.info("====差值结果不为0");
+        }
+    }
+
 }
