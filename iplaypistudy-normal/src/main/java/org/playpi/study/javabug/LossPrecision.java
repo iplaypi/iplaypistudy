@@ -35,7 +35,7 @@ public class LossPrecision {
         BigDecimal bigDecimal1 = new BigDecimal(Double.toString(val));
         BigDecimal bigDecimal2 = new BigDecimal(Double.toString(1D));
         log.info("====multiply:[{}]", bigDecimal1.multiply(bigDecimal2).setScale(2, BigDecimal.ROUND_HALF_UP));
-        // 如果直接使用double构造仍旧是错误的
+        // 如果直接使用double构造,得到的结果仍旧是错误的
         BigDecimal bigDecimal3 = new BigDecimal(val);
         BigDecimal bigDecimal4 = new BigDecimal(1D);
         log.info("====multiply:[{}]", bigDecimal3.multiply(bigDecimal4).setScale(2, BigDecimal.ROUND_HALF_UP));
