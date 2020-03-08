@@ -12,7 +12,7 @@
     <artifactId>iplaypistudy-spark</artifactId>
 
     <name>iplaypistudy-spark</name>
-    <url>${parent.url}</url>
+    <url>${project.parent.url}</url>
 
     <build>
         <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->

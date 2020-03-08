@@ -5,6 +5,7 @@ import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 
+import java.io.Serializable;
 import java.util.Map;
 
 /**
@@ -13,7 +14,7 @@ import java.util.Map;
  *
  * @author pengfei
  */
-public abstract class ClientRunner {
+public abstract class ClientRunner implements Serializable{
 
     /**
      * Initialize the command line options

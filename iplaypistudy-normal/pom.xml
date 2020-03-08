@@ -13,7 +13,7 @@
     <packaging>jar</packaging>
 
     <name>iplaypistudy-normal</name>
-    <url>${parent.url}</url>
+    <url>${project.parent.url}</url>
 
     <dependencies>
         <dependency>
@@ -36,7 +36,7 @@
         <dependency>
             <groupId>org.playpi.study</groupId>
             <artifactId>iplaypistudy-common-core</artifactId>
-            <version>${parent.version}</version>
+            <version>${project.parent.version}</version>
         </dependency>
 
         <!-- 测试用例 -->

@@ -12,14 +12,14 @@
     <artifactId>iplaypistudy-hbase</artifactId>
 
     <name>iplaypistudy-hbase</name>
-    <url>${parent.url}</url>
+    <url>${project.parent.url}</url>
 
     <dependencies>
         <!-- 核心依赖 -->
         <dependency>
             <groupId>org.playpi.study</groupId>
             <artifactId>iplaypistudy-common-core</artifactId>
-            <version>${parent.version}</version>
+            <version>${project.parent.version}</version>
         </dependency>
         <!-- HBase 客户端接口 -->
         <dependency>

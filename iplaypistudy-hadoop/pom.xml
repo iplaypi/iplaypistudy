@@ -12,7 +12,7 @@
     <artifactId>iplaypistudy-hadoop</artifactId>
 
     <name>iplaypistudy-hadoop</name>
-    <url>${parent.url}</url>
+    <url>${project.parent.url}</url>
 
 
     <build>

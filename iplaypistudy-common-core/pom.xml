@@ -12,14 +12,14 @@
     <artifactId>iplaypistudy-common-core</artifactId>
 
     <name>iplaypistudy-common-core</name>
-    <url>${parent.url}</url>
+    <url>${project.parent.url}</url>
 
     <dependencies>
         <!-- 核心依赖 -->
         <dependency>
             <groupId>org.playpi.study</groupId>
             <artifactId>iplaypistudy-common-config</artifactId>
-            <version>${parent.version}</version>
+            <version>${project.parent.version}</version>
         </dependency>
         <!-- hadoop 相关依赖 -->
         <dependency>
