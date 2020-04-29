@@ -22,7 +22,7 @@ public class StardardTest {
         try {
             List<String> lines = FileUtils.readLines(new File("d:\\wb.txt"));
             List<String> out = Lists.newArrayList();
-            out.add("mid,uid,发表时间,采集时间,第一次采集时间,入库时间,第一次入库时间");
+            out.add("mid,uid,发表时间,采集时间,第一次采集时间,入库时间,第一次入库时间,data_source_ids");
             for (String line : lines) {
                 List<String> lineList = Lists.newArrayList(line.split(","));
                 SimpleDateFormat sdf1 = new SimpleDateFormat("yyyyMMddHHmmss");
