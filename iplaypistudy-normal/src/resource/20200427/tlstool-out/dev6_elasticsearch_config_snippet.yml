@@ -1,0 +1,24 @@
+# This is a configuration snippet for the node dev6
+# This snippet needs to be inserted into the file config/elasticsearch.yml of the respective node.
+# If the config file already contains SearchGuard configuration, this needs to be replaced.
+# Furthermore, you need to copy the files referenced below into the same directory.
+# Please refer to http://docs.search-guard.com/latest/configuring-tls for further configuration of your installation.
+
+
+searchguard.ssl.transport.pemcert_filepath: dev6.pem
+searchguard.ssl.transport.pemkey_filepath: dev6.key
+searchguard.ssl.transport.pemkey_password: sTVoi160nVfl
+searchguard.ssl.transport.pemtrustedcas_filepath: root-ca.pem
+searchguard.ssl.transport.enforce_hostname_verification: false
+searchguard.ssl.transport.resolve_hostname: false
+searchguard.ssl.http.enabled: true
+searchguard.ssl.http.pemcert_filepath: dev6_http.pem
+searchguard.ssl.http.pemkey_filepath: dev6_http.key
+searchguard.ssl.http.pemkey_password: F3zs20LEpS2b
+searchguard.ssl.http.pemtrustedcas_filepath: root-ca.pem
+searchguard.nodes_dn:
+- CN=dev4.playpi.com,OU=Ops,O=Playpi Com\, Inc.,DC=playpi,DC=com
+- CN=dev5.playpi.com,OU=Ops,O=Playpi Com\, Inc.,DC=playpi,DC=com
+- CN=dev6.playpi.com,OU=Ops,O=Playpi Com\, Inc.,DC=playpi,DC=com
+searchguard.authcz.admin_dn:
+- CN=client-admin.playpi.com,OU=Ops,O=Playpi Com\, Inc.,DC=playpi,DC=com
