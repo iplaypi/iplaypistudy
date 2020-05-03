@@ -1,0 +1,18 @@
+admin:
+    cluster:
+        - UNLIMITED
+    indices:
+        '*':
+            '*':
+                - UNLIMITED
+
+custom:
+    cluster:
+        - CLUSTER_MONITOR
+        - CLUSTER_COMPOSITE_OPS_RO
+        - indices:data/read/scroll*
+    indices:
+        '*':
+            '*':
+                - READ
+                - SEARCH

@@ -1,0 +1,7 @@
+admin:
+    users:
+        - admin
+
+custom:
+    users:
+        - custom

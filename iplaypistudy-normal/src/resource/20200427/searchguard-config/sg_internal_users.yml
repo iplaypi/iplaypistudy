@@ -1,0 +1,14 @@
+admin:
+    hash: $2a$12$qDsJtWx/IIkqhOVZXKh4M.bBLpjBmG6tL00vNhsfb4WS6wH7M1M3C
+    #password is: admin-!#%
+    #roles:
+    #    - admin
+    #    - can-read-all
+    #    - can-write-all
+
+custom:
+    hash: $2a$12$URJTPgsK9v7iYcq/dAYJVeH2t/VftkoHr2DraNnYS/ooqW3sZrJhS
+    #password is: custom-$@~
+    #roles:
+    #    - custom
+    #    - can-read-all
