@@ -1,0 +1,2 @@
+消费组1	group_xx_v1	topic_xx_v1	100000
+消费组2	group_xx_v2	topic_xx_v2	500000
