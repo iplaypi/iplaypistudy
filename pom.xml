@@ -41,7 +41,7 @@
         <commons-collections.version>3.2.2</commons-collections.version>
         <commons-configuration.version>1.10</commons-configuration.version>
         <commons-lang3.version>3.5</commons-lang3.version>
-        <junit.version>4.12</junit.version>
+        <junit.version>4.13.1</junit.version>
     </properties>
 
     <!-- 阿里云maven仓库 -->
@@ -86,7 +86,7 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.11</version>
+            <version>4.13.1</version>
             <scope>test</scope>
         </dependency>
         <!-- 日志 -->
