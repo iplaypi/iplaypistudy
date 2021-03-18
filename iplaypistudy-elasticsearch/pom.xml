@@ -15,7 +15,7 @@
     <url>${project.parent.url}</url>
 
     <properties>
-        <elasticsearch.version>5.6.8</elasticsearch.version>
+        <elasticsearch.version>7.11.2</elasticsearch.version>
     </properties>
 
     <dependencies>
